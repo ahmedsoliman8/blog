@@ -11,7 +11,8 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
+        $blogs = $category->blogs()->latest()->paginate(8);
 
-        return view('theme.category', compact('category'));
+        return view('theme.category', compact('category','blogs'));
     }
 }

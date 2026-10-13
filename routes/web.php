@@ -20,7 +20,7 @@ Route::controller(ThemeController::class)->name('theme.')->group(function () {
 Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories.index');
 
-Route::get('/categories/{category}', [CategoryController::class, 'show'])
+Route::get('/categories/{category:name}', [CategoryController::class, 'show'])
     ->name('categories.show');
 // contact Routes
 Route::post('/contact/store', [ContactController::class, 'store'])
