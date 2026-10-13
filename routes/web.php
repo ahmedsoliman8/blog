@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
@@ -13,19 +14,22 @@ Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/category', 'category')->name('category');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/single-blog', 'singleBlog')->name('singleBlog');
-   Route::get('/categories', [CategoryController::class, 'index'])
-        ->name('categories.index');
 
-    Route::get('/categories/{category}', [CategoryController::class, 'show'])
-        ->name('categories.show');
-
-    Route::post('/contact/store', [ContactController::class, 'store'])
-        ->name('contact.store');
 });
+//Category Routes
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories.index');
 
+Route::get('/categories/{category}', [CategoryController::class, 'show'])
+    ->name('categories.show');
+// contact Routes
+Route::post('/contact/store', [ContactController::class, 'store'])
+    ->name('contact.store');
 //Subscriber Store Routes
 Route::post('/subscriber-store', [SubscriberController::class, 'store'])->name('subscribe.store');
-
+//Blog  Routes
+Route::resource('blogs', BlogController::class)
+    ->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -43,7 +43,7 @@
                     @endif
 
 
-                    <form action="{{ route('theme.contact.store') }}" class="form-contact contact_form" method="post"
+                    <form action="{{ route('contact.store') }}" class="form-contact contact_form" method="post"
                           id="contactForm" novalidate="novalidate">
                         @csrf
                         <div class="row">
