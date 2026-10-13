@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        View::composer(['theme.partials.header', 'theme.partials.sidebar'], function ($view) {
+        View::composer(['theme.partials.header','theme.blogs.create', 'theme.partials.sidebar'], function ($view) {
             $categories = Category::get();
             $categoriesCount = $categories->count();
             $view->with(['categories'=> $categories ,'categoriesCount' => $categoriesCount]);

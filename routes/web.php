@@ -28,8 +28,8 @@ Route::post('/contact/store', [ContactController::class, 'store'])
 //Subscriber Store Routes
 Route::post('/subscriber-store', [SubscriberController::class, 'store'])->name('subscribe.store');
 //Blog  Routes
-Route::resource('blogs', BlogController::class)
-    ->middleware('auth');
+Route::resource('blogs', BlogController::class)->middleware('auth');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

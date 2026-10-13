@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -20,15 +22,33 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('theme.blogs.create');
+        $categories = Category::all();
+
+        return view('theme.blogs.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BlogRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $newImageName = time() . '-' . $image->getClientOriginalName();
+            $image->storeAs('blogs', $newImageName, 'public');
+            /* $validated['image'] = $request->file('image')
+                 ->store('blogs', 'public');*/
+            $data['image'] = $newImageName;
+        }
+
+        $data['user_id'] = $request->user()->id;
+
+        Blog::create($data);
+
+        return redirect()->back()
+            ->with('success', 'Blog created successfully!');
     }
 
     /**
