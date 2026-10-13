@@ -33,20 +33,14 @@ class BlogController extends Controller
     public function store(BlogRequest $request)
     {
         $data = $request->validated();
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newImageName = time() . '-' . $image->getClientOriginalName();
             $image->storeAs('blogs', $newImageName, 'public');
-            /* $validated['image'] = $request->file('image')
-                 ->store('blogs', 'public');*/
             $data['image'] = $newImageName;
         }
-
         $data['user_id'] = $request->user()->id;
-
         Blog::create($data);
-
         return redirect()->back()
             ->with('success', 'Blog created successfully!');
     }
