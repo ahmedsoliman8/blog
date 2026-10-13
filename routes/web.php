@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ThemeController;
@@ -12,6 +13,9 @@ Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/single-blog', 'singleBlog')->name('singleBlog');
 
+
+    Route::post('/contact/store', [ContactController::class, 'store'])
+        ->name('contact.store');
 });
 
 //Subscriber Store Routes
