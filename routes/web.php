@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +13,11 @@ Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/category', 'category')->name('category');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/single-blog', 'singleBlog')->name('singleBlog');
+   Route::get('/categories', [CategoryController::class, 'index'])
+        ->name('categories.index');
 
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])
+        ->name('categories.show');
 
     Route::post('/contact/store', [ContactController::class, 'store'])
         ->name('contact.store');
