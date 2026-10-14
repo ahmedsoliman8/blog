@@ -28,7 +28,9 @@ Route::post('/contact/store', [ContactController::class, 'store'])
 //Subscriber Store Routes
 Route::post('/subscriber-store', [SubscriberController::class, 'store'])->name('subscribe.store');
 //Blog  Routes
-Route::resource('blogs', BlogController::class)->middleware('auth');
+Route::resource('blogs', BlogController::class);
+Route::get('my-blogs', [BlogController::class, 'myBlogs'])->name('blogs.my-blogs')
+    ->middleware('auth');
 
 
 Route::get('/dashboard', function () {

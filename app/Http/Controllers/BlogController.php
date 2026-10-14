@@ -6,6 +6,7 @@ use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -50,7 +51,15 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        return view('theme.single-blog', compact('blog'));
+    }
+
+    public function myBlogs()
+    {
+
+        $blogs = Auth::user()->blogs()->paginate(10);
+
+        return view('theme.blogs.my-blogs', compact('blogs'));
     }
 
     /**
