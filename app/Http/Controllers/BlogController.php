@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -51,6 +52,7 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
+        $blog->load(['category', 'user']);
         return view('theme.single-blog', compact('blog'));
     }
 
@@ -67,7 +69,9 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        $categories = Category::all();
+
+        return view('theme.blogs.edit', compact('blog', 'categories'));
     }
 
     /**
@@ -75,14 +79,41 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Delete the previous image, if it exists.
+            if ($blog->image) {
+                Storage::disk('public')->delete('blogs/' . $blog->image);
+            }
+            $image = $request->file('image');
+            $newImageName = time() . '-' . $image->getClientOriginalName();
+            $image->storeAs('blogs', $newImageName, 'public');
+            $validated['image'] = $newImageName;
+        }
+        $blog->update($validated);
+        return redirect()
+            ->route('blogs.my-blogs')
+            ->with('success', 'Blog updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Blog $blog)
-    {
-        //
+    {  // Delete the previous image, if it exists.
+        if ($blog->image) {
+            Storage::disk('public')->delete('blogs/' . $blog->image);
+        }
+        $blog->delete();
+
+        return redirect()
+            ->route('blogs.my-blogs')
+            ->with('success', 'Blog deleted successfully.');
     }
 }

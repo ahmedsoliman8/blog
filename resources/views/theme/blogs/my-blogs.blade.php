@@ -14,6 +14,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <h2 class="mb-4">All Blogs</h2>
 
                     <div class="table-responsive">
@@ -56,6 +61,10 @@
                                         {{ $blog->category?->name ?? 'No category' }}
                                     </td>
                                     <td>
+                                        <a href="{{ route('blogs.show', $blog->id) }}"
+                                           class="btn btn-success btn-sm">
+                                            Show
+                                        </a>
                                         <a href="{{ route('blogs.edit', $blog->id) }}"
                                            class="btn btn-primary btn-sm">
                                             Edit
