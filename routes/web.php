@@ -28,8 +28,14 @@ Route::post('/contact/store', [ContactController::class, 'store'])
 //Subscriber Store Routes
 Route::post('/subscriber-store', [SubscriberController::class, 'store'])->name('subscribe.store');
 //Blog  Routes
-Route::resource('blogs', BlogController::class);
-Route::get('my-blogs', [BlogController::class, 'myBlogs'])->name('blogs.my-blogs')
+Route::resource('blogs', BlogController::class)
+    ->middleware('auth')
+    ->except(['show']);
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])
+    ->name('blogs.show');
+
+Route::get('my-blogs', [BlogController::class, 'myBlogs'])
+    ->name('blogs.my-blogs')
     ->middleware('auth');
 
 
