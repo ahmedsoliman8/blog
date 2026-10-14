@@ -31,7 +31,7 @@ Route::post('/subscriber-store', [SubscriberController::class, 'store'])->name('
 //Blog  Routes
 Route::resource('blogs', BlogController::class)
     ->middleware('auth')
-    ->except(['show']);
+    ->except(['show','index']);
 Route::get('/blogs/{blog}', [BlogController::class, 'show'])
     ->name('blogs.show');
 
