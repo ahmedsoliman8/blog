@@ -23,8 +23,8 @@
                                              src="{{asset("storage/blogs/".$blog->image)}}"
                                              alt="">
                                         <ul class="thumb-info">
-                                            <li><a href="#"><i class="ti-user"></i>{{$blog->user->name}}</a></li>
-                                            <li><a href="#"><i class="ti-themify-favicon"></i>2 Comments</a></li>
+                                            <li><i class="ti-user"></i>{{$blog->user->name}}</li>
+                                            <li><i class="ti-themify-favicon"></i>{{$blog->comments()->count()}} Comments</li>
                                         </ul>
                                     </div>
                                     <div class="details mt-20">

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -26,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['theme.partials.header','theme.blogs.create', 'theme.partials.sidebar'], function ($view) {
             $categories = Category::get();
             $categoriesCount = $categories->count();
-            $view->with(['categories'=> $categories ,'categoriesCount' => $categoriesCount]);
+            $recentBlogs = Blog::latest()->take(3)->get();
+            $view->with(['categories'=> $categories ,'categoriesCount' => $categoriesCount,'recentBlogs' => $recentBlogs]);
         });
         Paginator::useBootstrapFive();
     }

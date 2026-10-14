@@ -24,72 +24,26 @@
         <section>
             <div class="container">
                 <div class="owl-carousel owl-theme blog-slider">
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide1.png" alt="">
+                    @forelse($sliderBlogs as $blog)
+                        <div class="card blog__slide text-center">
+                            <div class="blog__slide__img">
+                                <img class="card-img rounded-0"
+                                     src="{{asset("storage/blogs/".$blog->image)}}" alt="">
+                            </div>
+                            <div class="blog__slide__content">
+                                <a class="blog__slide__label"
+                                   href="{{ route('categories.show', $blog->category->name) }}">{{$blog->category->name}}</a>
+                                <h3><a href="{{route('blogs.show',$blog->id)}}">{{$blog->name}}</a></h3>
+                                <p> {{$blog->created_at->diffForHumans()}}</p>
+                            </div>
                         </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
+
+                    @empty
+                        <div class="col-md-12">
+                            No Blogs found.
                         </div>
-                    </div>
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide2.png" alt="">
-                        </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
-                        </div>
-                    </div>
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide3.png" alt="">
-                        </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
-                        </div>
-                    </div>
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide1.png" alt="">
-                        </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
-                        </div>
-                    </div>
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide2.png" alt="">
-                        </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
-                        </div>
-                    </div>
-                    <div class="card blog__slide text-center">
-                        <div class="blog__slide__img">
-                            <img class="card-img rounded-0"
-                                 src="{{asset('assets')}}/img/blog/blog-slider/blog-slide3.png" alt="">
-                        </div>
-                        <div class="blog__slide__content">
-                            <a class="blog__slide__label" href="#">Fashion</a>
-                            <h3><a href="#">New york fashion week's continued the evolution</a></h3>
-                            <p>2 days ago</p>
-                        </div>
-                    </div>
+                    @endforelse
+
                 </div>
             </div>
         </section>
@@ -106,11 +60,13 @@
                                     <img class="img-fluid w-100" src="{{asset("storage/blogs/".$blog->image)}}"
                                          alt="">
                                     <ul class="thumb-info">
-                                        <li><a href="#"><i class="ti-user"></i>{{$blog->user->name}}</a></li>
-                                        <li><a href="#"><i
-                                                    class="ti-notepad"></i>{{ $blog->created_at->format('F d, Y')}}</a>
+                                        <li><i class="ti-user"></i>{{$blog->user->name}}</li>
+                                        <li><i
+                                                class="ti-notepad"></i>{{ $blog->created_at->format('F d, Y')}}
                                         </li>
-                                        <li><a href="#"><i class="ti-themify-favicon"></i>2 Comments</a></li>
+                                        <li><i class="ti-themify-favicon"></i>{{$blog->comments()->count()}}
+                                            Comments
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="details mt-20">
