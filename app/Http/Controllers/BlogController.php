@@ -52,7 +52,7 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        $blog->load(['category', 'user']);
+        $blog->load(['category', 'user', 'comments']);
         return view('theme.single-blog', compact('blog'));
     }
 

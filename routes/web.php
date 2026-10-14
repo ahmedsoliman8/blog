@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/category', 'category')->name('category');
     Route::get('/contact', 'contact')->name('contact');
-    Route::get('/single-blog', 'singleBlog')->name('singleBlog');
+    //Route::get('/single-blog', 'singleBlog')->name('singleBlog');
 
 });
 //Category Routes
@@ -38,6 +39,10 @@ Route::get('my-blogs', [BlogController::class, 'myBlogs'])
     ->name('blogs.my-blogs')
     ->middleware('auth');
 
+Route::post('/blogs/{blog}/comments', [
+    CommentController::class,
+    'store'
+])->name('blogs.comments.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

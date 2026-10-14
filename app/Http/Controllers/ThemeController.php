@@ -9,16 +9,12 @@ class ThemeController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::paginate(4);
+        $blogs = Blog::latest()->paginate(4);
        // dd($blogs);
         return view('theme.index', compact('blogs'));
 
     }
 
-    public function category()
-    {
-        return view('theme.category');
-    }
 
     public function contact()
     {
@@ -26,11 +22,7 @@ class ThemeController extends Controller
 
     }
 
-    public function singleBlog()
-    {
-        return view('theme.single-blog');
 
-    }
 
     public function login()
     {
